@@ -127,3 +127,4 @@ bio
 # 8. Pages
 
 ![Page diagram](images/design_document/pageDiagram.png)
+![img.png](img.png)
