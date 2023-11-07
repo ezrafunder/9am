@@ -47,12 +47,17 @@ We will provide a web interface for users to answer the daily question, view the
 
 ## 6.1. Public Models
 ```
-// QuestionModel
 
-String Question;
-String Answer;
+//Login 
+String userId
+String password
+
+// HomeQuestion
+String Question; //get question
+Integer Answer; //submit integer
 List<String> Questions;
 List<String> Answers;
+
 ```
 
 ```
@@ -67,7 +72,7 @@ Integer streak
 
 String userId;
 Integer contactId;
-String dateTime;;
+String dateTime;
 List<String> notes;
 ```
 
@@ -127,4 +132,4 @@ bio
 # 8. Pages
 
 ![Page diagram](images/design_document/pageDiagram.png)
-![img.png](img.png)
+![img_1.png](img_1.png)
