@@ -45,6 +45,8 @@ Quiz questions and answers will be stored in DynamoDB, along with leaderboards. 
 
 We will provide a web interface for users to answer the daily question, view the result
 
+Avatar upload from local files.
+
 ## 6.1. Public Models
 ```
 
@@ -76,21 +78,34 @@ String dateTime;
 List<String> notes;
 ```
 
-## 6.2. Get Question Endpoint
-* Accepts `GET` requests to `/questions/:question/`
-* Accepts a list of questions and returns the appropriate question.
+## 6.2. Endpoints
+* Accepts `GET /questions/daily' The backend would need to return the question text, a list of possible answers and the correct answer.
     * If the given question is not found, will throw a
       `QuestionNotFoundException`
+* DELETE /users/:userId : rename yourself
+*  DELETE /answers/:amswer : delete your answer if user is in the 5 minute window
+* POST /submit/userId/:answers : records selected answer
+* GET /leaderboard : takes you to the leaderboard page
+* GET /questions/timer/start : Starts the 5 minute timer for the daily trivia question.
+* GET /questions/timer/check : Checks if the 5 minute timer for the daily trivia question has expired.
+* GET /questions/timer/remaining : Returns the remaining time on the 5 minute timer for the daily trivia question.
+* DELETE /questions/timer
+
 
 
 # 7. Tables
 
 _Define the DynamoDB tables you will need for the data your service will use. It may be helpful to first think of what objects your service will need, then translate that to a table structure._
-
+Users: Stores user data, such as name, userID, and maybe email?
+Questions: Stores trivia questions, including the question text, answer choices, and correct answer.
+Answers: Stores user answers to questions.
+Scores: Stores user scores for each day.
+Leaderboard: Stores the global leaderboard data, including rank, user ID, name, score, and streak.
 
 ### 7.1. ``
 ```
-Questions
+Questions - 
+
 
 Partition key: questionId
 Sort key: difficulty
@@ -99,16 +114,15 @@ question
 answer
 answerChoices
 tags
-Scores
+
+Score -
 
 Partition key: userId
 Sort key: date
 Attributes:
 score
-correctAnswers
-incorrectAnswers
-streak
-Leaderboards
+
+Leaderboards -
 
 Partition key: rank
 Sort key: userId
@@ -116,15 +130,21 @@ Attributes:
 name
 score
 streak
-Profiles
+
+UserAnswers - 
+Partition key: userId
+Sort key: questionId
+Attributes:
+answer
+
+Profiles- 
 
 Partition key: userId
 Sort key: attributeName
 Attributes:
 name
 email
-avatar
-bio
+
 
 ```
 
@@ -132,4 +152,4 @@ bio
 # 8. Pages
 
 ![Page diagram](images/design_document/pageDiagram.png)
-![img_1.png](img_1.png)
+![img_1.png](img_1.png)\
