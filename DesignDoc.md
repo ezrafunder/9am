@@ -107,13 +107,12 @@ Leaderboard: Stores the global leaderboard data, including rank, user ID, name, 
 Questions - 
 
 
-Partition key: questionId
-Sort key: difficulty
+Partition key: String date
 Attributes:
-question
-answer
-answerChoices
-tags
+String question 
+String answer
+Map answerChoices
+
 
 Score -
 
@@ -127,9 +126,9 @@ Leaderboards -
 Partition key: rank
 Sort key: userId
 Attributes:
-name
-score
-streak
+String name
+Int score
+Int streak
 
 UserAnswers - 
 Partition key: userId
