@@ -1,0 +1,106 @@
+{
+  "questions": [
+    {
+      "PutRequest": {
+        "Item": {
+          "date": {
+            "S": "2023-11-19"
+          },
+          "questionId": {
+            "N": "55"
+          },
+          "question": {
+            "S": "What is the capital of France?"
+          },
+          "answer": {
+            "S": "Paris"
+          },
+          "answerChoices": {
+            "M": {
+              "A": {
+                "S": "Paris"
+              },
+              "B": {
+                "S": "London"
+              },
+              "C": {
+                "S": "Berlin"
+              },
+              "D": {
+                "S": "Rome"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "date": {
+            "S": "2023-11-18"
+          },
+          "questionId": {
+            "N": "56"
+          },
+          "question": {
+            "S": "What is the chemical symbol for water?"
+          },
+          "answer": {
+            "S": "H2O"
+          },
+          "answerChoices": {
+            "M": {
+              "A": {
+                "S": "H2O"
+              },
+              "B": {
+                "S": "CO2"
+              },
+              "C": {
+                "S": "O2"
+              },
+              "D": {
+                "S": "N2"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "date": {
+            "S": "2023-11-17"
+          },
+          "questionId": {
+            "N": "57"
+          },
+          "question": {
+            "S": "Who is the current president of the United States?"
+          },
+          "answer": {
+            "S": "Joe Biden"
+          },
+          "answerChoices": {
+            "M": {
+              "A": {
+                "S": "Joe Biden"
+              },
+              "B": {
+                "S": "Donald Trump"
+              },
+              "C": {
+                "S": "Barack Obama"
+              },
+              "D": {
+                "S": "George W. Bush"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
