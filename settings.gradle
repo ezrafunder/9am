@@ -8,4 +8,4 @@
  */
 
 rootProject.name = '9am'
-include('app')
+include('9amLambda')
