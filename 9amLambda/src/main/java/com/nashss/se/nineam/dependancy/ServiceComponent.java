@@ -2,6 +2,7 @@ package com.nashss.se.nineam.dependancy;
 
 
 import com.nashss.se.nineam.activity.GetQuestionActivity;
+import com.nashss.se.nineam.activity.SaveUserAnswerActivity;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -15,4 +16,5 @@ public interface ServiceComponent {
 
     GetQuestionActivity provideGetQuestionActivity();
 
+    SaveUserAnswerActivity provideSaveUserAnswerActivity();
 }
