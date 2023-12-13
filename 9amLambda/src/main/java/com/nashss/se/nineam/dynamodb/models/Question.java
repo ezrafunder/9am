@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Question {
     private String date;
     private String answer;
-    private Integer questionId;
+    private String questionId;
     private Map<String, String> answerChoices;
     private String question;
 
@@ -30,11 +30,11 @@ public class Question {
         this.answer = answer;
     }
     @DynamoDBAttribute(attributeName = "questionId")
-    public Integer getQuestionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
+    public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
     @DynamoDBAttribute(attributeName = "answerChoices")

@@ -1,18 +1,16 @@
 package com.nashss.se.nineam.models;
 
-import com.nashss.se.nineam.dynamodb.models.Question;
-
 import java.util.Map;
 import java.util.Objects;
 
 public class QuestionModel {
     private String date;
     private String answer;
-    private Integer questionId;
+    private String questionId;
     private Map<String, String> answerChoices;
     private String question;
 
-    private QuestionModel(String date, String answer, Integer questionId, Map<String, String> answerChoices, String question) {
+    private QuestionModel(String date, String answer, String questionId, Map<String, String> answerChoices, String question) {
         this.date = date;
         this.answer = answer;
         this.questionId = questionId;
@@ -28,7 +26,7 @@ public class QuestionModel {
         return answer;
     }
 
-    public Integer getQuestionId() {
+    public String getQuestionId() {
         return questionId;
     }
 
@@ -58,7 +56,7 @@ public class QuestionModel {
     public static class Builder {
         private String date;
         private String answer;
-        private Integer questionId;
+        private String questionId;
         private Map<String, String> answerChoices;
         private String question;
 
@@ -74,7 +72,7 @@ public class QuestionModel {
             this.answerChoices = answerChoices;
             return this;
         }
-        public Builder withQuestionId(Integer questionId) {
+        public Builder withQuestionId(String questionId) {
             this.questionId = questionId;
             return this;
         }

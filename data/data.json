@@ -7,7 +7,7 @@
             "S": "2023-11-19"
           },
           "questionId": {
-            "N": "55"
+            "S": "55"
           },
           "question": {
             "S": "What is the capital of France?"
@@ -41,7 +41,7 @@
             "S": "2023-11-18"
           },
           "questionId": {
-            "N": "56"
+            "S": "56"
           },
           "question": {
             "S": "What is the chemical symbol for water?"
@@ -75,7 +75,7 @@
             "S": "2023-11-17"
           },
           "questionId": {
-            "N": "57"
+            "S": "57"
           },
           "question": {
             "S": "Who is the current president of the United States?"
