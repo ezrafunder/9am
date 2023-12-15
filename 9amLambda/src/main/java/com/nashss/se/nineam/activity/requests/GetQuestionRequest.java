@@ -6,7 +6,7 @@ public class GetQuestionRequest {
 
     private final String date;
 
-    private GetQuestionRequest(String date) {
+    public GetQuestionRequest(String date) {
         this.date = date;
     }
 

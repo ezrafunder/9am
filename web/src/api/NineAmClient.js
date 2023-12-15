@@ -7,7 +7,7 @@ export default class NineAmClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-              const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getQuestion'];
+              const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getQuestion','sendUserAnswer'];
 
         this.bindClassMethods(methodsToBind, this);
 
@@ -63,6 +63,7 @@ export default class NineAmClient extends BindingClass {
 
         return await this.authenticator.getUserToken();
     }
+
     async getQuestion(date, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can view contacts.");
@@ -76,6 +77,27 @@ export default class NineAmClient extends BindingClass {
             this.handleError(error, errorCallback);
         }
     }
+    async sendUserAnswer(selectedAnswer, questionId, errorCallback) {
+           try {
+               const token = await this.getTokenOrThrow("Only authenticated users can save answers.");
+               const response = await this.axiosClient.post(
+                   `/answers`,
+                   {
+                       questionId: questionId,
+                       userChoice: selectedAnswer,
+                   },
+                   {
+                       headers: {
+                           Authorization: `Bearer ${token}`,
+                       },
+                   }
+               );
+               console.log("User answer saved successfully:", response.data);
+           } catch (error) {
+               this.handleError(error, errorCallback);
+               throw error;
+           }
+       }
     /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.
