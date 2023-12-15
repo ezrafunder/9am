@@ -5,18 +5,17 @@
     <script type="text/javascript" src="assets/viewQuestion.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
+<body>
+<header id="header"></header>
 
-<body class="background">
-    <header class="header" id="header"></header>
-    <div class="card">
-        <h2>Question of the Day - </h2>
-        <h4 id="question"></h4>
-        <input type="question" id="track-number">
-        <h4 id="answer-choices"></h4>
-        <p class="button-group">
-            <a href="createGroup.html" class="button">New Group</a>
-        </p>
+<main id="content">
+    <h1 id="question">Loading...</h1>
+    <div id="answer">
     </div>
-</body>
+    <button id="submitButton">Submit Answer</button>
 
+</main>
+
+<script src="script.js"></script>
+</body>
 </html>
