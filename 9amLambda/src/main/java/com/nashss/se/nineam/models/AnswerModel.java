@@ -1,7 +1,5 @@
 package com.nashss.se.nineam.models;
 
-import com.nashss.se.nineam.activity.requests.GetAnswerRequest;
-
 import java.util.Objects;
 
 public class AnswerModel {
@@ -11,11 +9,14 @@ public class AnswerModel {
     private final String userChoice;
     private final boolean isCorrect;
 
-    private AnswerModel(String questionId, String userId, String userChoice, boolean isCorrect) {
+    private final String date;
+
+    private AnswerModel(String questionId, String userId, String userChoice, boolean isCorrect, String date) {
         this.questionId = questionId;
         this.userId = userId;
         this.userChoice = userChoice;
         this.isCorrect = isCorrect;
+        this.date = date;
     }
 
     public String getQuestionId() {
@@ -56,9 +57,14 @@ public class AnswerModel {
         private String userId;
         private String userChoice;
         private boolean isCorrect;
+        private String date;
 
         public Builder withQuestionId(String questionId) {
             this.questionId = questionId;
+            return this;
+        }
+        public Builder withDate(String date) {
+            this.date = date;
             return this;
         }
 
@@ -78,7 +84,7 @@ public class AnswerModel {
         }
 
         public AnswerModel build() {
-            return new AnswerModel(questionId, userId, userChoice, isCorrect);
+            return new AnswerModel(questionId, userId, userChoice, isCorrect, date);
         }
     }
 }

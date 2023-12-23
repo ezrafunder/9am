@@ -24,6 +24,7 @@ public class ModelConverter {
                 .withIsCorrect(userAnswer.isCorrect())
                 .withUserChoice(userAnswer.getUserChoice())
                 .withUserId(userAnswer.getUserId())
+                .withDate(userAnswer.getDate())
                 .build();
     }
 }

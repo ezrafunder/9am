@@ -18,14 +18,20 @@ public class UserAnswer {
     @DynamoDBAttribute(attributeName = "userChoice")
     private String userChoice;
 
+    @DynamoDBAttribute(attributeName = "date")
+    private String date;
+
     @DynamoDBAttribute(attributeName = "isCorrect")
     private boolean isCorrect;
 
-    public UserAnswer() {
-        this.questionId = questionId;
-        this.userId = userId;
-        this.userChoice = userChoice;
-        this.isCorrect = isCorrect;
+
+
+
+    public String getDate() {
+        return date;
+    }
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getQuestionId() {
@@ -60,17 +66,8 @@ public class UserAnswer {
         return isCorrect;
     }
 
-//    public int getScore() {
-//        return isCorrect() ? 1 : 0;
-//    }
-//
-//    public String getFeedback() {
-//        if (isCorrect()) {
-//            return "Correct!";
-//        } else {
-//            return "Incorrect.";
-//        }
-//    }
+
+
 
     @Override
     public String toString() {
@@ -78,6 +75,7 @@ public class UserAnswer {
                 "questionId='" + questionId + '\'' +
                 ", userId='" + userId + '\'' +
                 ", userChoice='" + userChoice + '\'' +
+                ", date='" + date + '\'' +
                 ", isCorrect=" + isCorrect +
                 '}';
     }
@@ -87,11 +85,11 @@ public class UserAnswer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserAnswer that = (UserAnswer) o;
-        return isCorrect == that.isCorrect && Objects.equals(questionId, that.questionId) && Objects.equals(userId, that.userId) && Objects.equals(userChoice, that.userChoice);
+        return isCorrect == that.isCorrect && Objects.equals(questionId, that.questionId) && Objects.equals(userId, that.userId) && Objects.equals(userChoice, that.userChoice) && Objects.equals(date, that.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(questionId, userId, userChoice, isCorrect);
+        return Objects.hash(questionId, userId, userChoice, date, isCorrect);
     }
 }
