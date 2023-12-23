@@ -6,7 +6,7 @@ import DataStore from '../util/DataStore';
 class ViewQuestion extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addQuestionToPage'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addQuestionToPage', 'submit', 'redirectToViewScore'], this);
         this.dataStore = new DataStore();
         this.selectedAnswer = null;
         this.dataStore.addChangeListener(this.addQuestionToPage);
@@ -28,47 +28,50 @@ class ViewQuestion extends BindingClass {
 
 
     mount() {
-
-
-
         this.header.addHeaderToPage();
 
         this.client = new NineAmClient();
+
         document.getElementById('submit').addEventListener('click', this.submit);
 
         this.clientLoaded();
 
     }
 
-    async submit(evt) {
-            evt.preventDefault();
+async submit(evt) {
+  evt.preventDefault();
 
-            const errorMessageDisplay = document.getElementById('error-message');
-            errorMessageDisplay.innerText = ``;
-            errorMessageDisplay.classList.add('hidden');
+       const errorMessageDisplay = document.getElementById('error-message');
+          errorMessageDisplay.innerText = ``;
+          errorMessageDisplay.classList.add('hidden');
 
-            const createButton = document.getElementById('create');
-            const origButtonText = createButton.innerText;
-            createButton.innerText = 'Loading...';
 
-            const groupName = document.getElementById('group-name').value;
-            const tagsText = document.getElementById('tags').value;
+          //add error message in html
 
-            let tags;
-            if (tagsText.length < 1) {
-                tags = null;
-            } else {
-                tags = tagsText.split(/\s*,\s*/);
-            }
+  const submitButton = document.getElementById('submit');
+  const origButtonText = submitButton.innerText;
+  submitButton.innerText = 'Loading...';
 
-            const group = await this.client.createGroup(groupName, tags, (error) => {
-                createButton.innerText = origButtonText;
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
-                errorMessageDisplay.classList.remove('hidden');
-            });
-            this.dataStore.set('group', group);
-        }
-
+//  const answerElement = document.querySelector('input[name="answer"]:checked');
+if(document.getElementById('A').checked){
+    this.selectedAnswer = document.getElementById('A').value;
+    }
+  else if(document.getElementById('B').checked){
+    this.selectedAnswer = document.getElementById('B').value;
+    }
+   else if(document.getElementById('C').checked){
+    this.selectedAnswer = document.getElementById('C').value;
+    }
+    else if(document.getElementById('D').checked){
+    this.selectedAnswer = document.getElementById('D').value;
+    }
+const answer = await this.client.sendUserAnswer(this.selectedAnswer,this.dataStore.get('question').date, (error) => {
+            submitButton.innerText = origButtonText;
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        });
+        this.dataStore.set('answer', answer);
+    }
 
  addQuestionToPage() {
         const fetchedQuestion = this.dataStore.get('question');
@@ -78,8 +81,6 @@ class ViewQuestion extends BindingClass {
             questionElement.innerText = fetchedQuestion.question;
 
             const answerElement = document.getElementById('answer');
-
-            // Create radio buttons for answer choices
             for (const letter in fetchedQuestion.answerChoices) {
                 const choiceElement = document.createElement('input');
                 choiceElement.type = 'radio';
@@ -92,22 +93,18 @@ class ViewQuestion extends BindingClass {
                 labelElement.innerText = fetchedQuestion.answerChoices[letter];
                 labelElement.setAttribute('for', letter);
                 answerElement.appendChild(labelElement);
-
-                //google how to check selected radio button
             }
-
-            // Add listener to submit button
-            const submitButton = document.getElementById('submitButton');
-            submitButton.addEventListener('click', () => {
-                if (this.selectedAnswer) {
-                    this.client.sendUserAnswer(fetchedQuestion.questionId, this.selectedAnswer);
-                } else {
-                    alert('Please select an answer choice!');
-                }
-            });
         } else {
             const questionElement = document.getElementById('question');
             questionElement.innerText = "Question not found";
+        }
+    }
+    redirectToViewScore() {
+            const group = this.dataStore.get('answer').
+            if (selectedAnswer != null) {
+                const encodedGroupName = encodeURIComponent(group.name);
+                window.location.href = `/group.html?name=${encodedGroupName}`;
+            }
         }
     }
 }

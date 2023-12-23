@@ -51,12 +51,16 @@ class UserAnswerDao {
     }
 
 
-  //  public void updateScore(UserAnswer userAnswer) {
-       // dynamoDBMapper.save(userAnswer);
- //   }
+    public void updateScore(UserAnswer userAnswer) {
+        dynamoDBMapper.save(userAnswer);
+    }
 
     public void deleteAnswer(String userId, String questionId) {
         UserAnswer userAnswer = getUserAnswer(userId, questionId);
         dynamoDBMapper.delete(userAnswer);
     }
 }
+
+
+///update dao, followed by new activity class, lambda, modelconvertor.
+

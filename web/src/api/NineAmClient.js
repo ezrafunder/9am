@@ -77,14 +77,14 @@ export default class NineAmClient extends BindingClass {
             this.handleError(error, errorCallback);
         }
     }
-    async sendUserAnswer(selectedAnswer, questionId, errorCallback) {
+    async sendUserAnswer(selectedAnswer, date, errorCallback) {
            try {
                const token = await this.getTokenOrThrow("Only authenticated users can save answers.");
                const response = await this.axiosClient.post(
                    `/answers`,
                    {
-                       questionId: questionId,
                        userChoice: selectedAnswer,
+                       date: date,
                    },
                    {
                        headers: {
