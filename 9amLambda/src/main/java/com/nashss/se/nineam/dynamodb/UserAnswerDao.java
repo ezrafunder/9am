@@ -62,5 +62,5 @@ class UserAnswerDao {
 }
 
 
-///update dao, followed by new activity class, lambda, modelconvertor.
+///update dao, followed by new activity class, lambda
 

@@ -6,7 +6,7 @@ import DataStore from '../util/DataStore';
 class ViewQuestion extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addQuestionToPage', 'submit', 'redirectToViewScore'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addQuestionToPage', 'submit',], this);
         this.dataStore = new DataStore();
         this.selectedAnswer = null;
         this.dataStore.addChangeListener(this.addQuestionToPage);
@@ -38,42 +38,46 @@ class ViewQuestion extends BindingClass {
 
     }
 
-async submit(evt) {
-  evt.preventDefault();
+    async submit(evt) {
+        evt.preventDefault();
 
-       const errorMessageDisplay = document.getElementById('error-message');
-          errorMessageDisplay.innerText = ``;
-          errorMessageDisplay.classList.add('hidden');
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
 
 
-          //add error message in html
+        //add error message in html
 
-  const submitButton = document.getElementById('submit');
-  const origButtonText = submitButton.innerText;
-  submitButton.innerText = 'Loading...';
+        const submitButton = document.getElementById('submit');
+        const origButtonText = submitButton.innerText;
+       // submitButton.innerText = 'Loading...';
 
-//  const answerElement = document.querySelector('input[name="answer"]:checked');
-if(document.getElementById('A').checked){
-    this.selectedAnswer = document.getElementById('A').value;
-    }
-  else if(document.getElementById('B').checked){
-    this.selectedAnswer = document.getElementById('B').value;
-    }
-   else if(document.getElementById('C').checked){
-    this.selectedAnswer = document.getElementById('C').value;
-    }
-    else if(document.getElementById('D').checked){
-    this.selectedAnswer = document.getElementById('D').value;
-    }
-const answer = await this.client.sendUserAnswer(this.selectedAnswer,this.dataStore.get('question').date, (error) => {
+        //  const answerElement = document.querySelector('input[name="answer"]:checked');
+        if (document.getElementById('A').checked) {
+            this.selectedAnswer = document.getElementById('A').value;
+        }
+        else if (document.getElementById('B').checked) {
+            this.selectedAnswer = document.getElementById('B').value;
+        }
+        else if (document.getElementById('C').checked) {
+            this.selectedAnswer = document.getElementById('C').value;
+        }
+        else if (document.getElementById('D').checked) {
+            this.selectedAnswer = document.getElementById('D').value;
+        }
+        const answer = await this.client.sendUserAnswer(this.selectedAnswer, this.dataStore.get('question').date, (error) => {
             submitButton.innerText = origButtonText;
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
         });
-        this.dataStore.set('answer', answer);
+        //console.log('Answer sent:', answer);
+            document.getElementById('result').innerText = `Your Answer: ${this.selectedAnswer} ${answer.correct}`; //reformat
+        //  List<UserAnswer> userAnswers = getUserAnswersFromDynamoDB(userId);
+        //  ViewHistoryResult result = new ViewHistoryResult(userAnswers);
+    
     }
 
- addQuestionToPage() {
+    addQuestionToPage() {
         const fetchedQuestion = this.dataStore.get('question');
 
         if (fetchedQuestion) {
@@ -97,14 +101,6 @@ const answer = await this.client.sendUserAnswer(this.selectedAnswer,this.dataSto
         } else {
             const questionElement = document.getElementById('question');
             questionElement.innerText = "Question not found";
-        }
-    }
-    redirectToViewScore() {
-            const group = this.dataStore.get('answer').
-            if (selectedAnswer != null) {
-                const encodedGroupName = encodeURIComponent(group.name);
-                window.location.href = `/group.html?name=${encodedGroupName}`;
-            }
         }
     }
 }

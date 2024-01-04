@@ -93,6 +93,7 @@ export default class NineAmClient extends BindingClass {
                    }
                );
                console.log("User answer saved successfully:", response.data);
+               return response.data.answer;
            } catch (error) {
                this.handleError(error, errorCallback);
                throw error;

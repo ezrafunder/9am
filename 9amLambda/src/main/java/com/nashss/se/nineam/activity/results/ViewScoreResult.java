@@ -1,7 +1,6 @@
 package com.nashss.se.nineam.activity.results;
 
 import com.nashss.se.nineam.models.ScoreModel;
-import org.apache.commons.lang3.builder.Builder;
 
 import java.util.List;
 
