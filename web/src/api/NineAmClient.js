@@ -77,6 +77,20 @@ export default class NineAmClient extends BindingClass {
             this.handleError(error, errorCallback);
         }
     }
+    async getViewHistory(errorCallback) {
+            try {
+                    const token = await this.getTokenOrThrow("Only authenticated users can see all contacts.");
+                    const response = await this.axiosClient.get(`answers`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    });
+                    return response.data.userAnswers;
+                } catch (error) {
+                        this.handleError(error, errorCallback)
+                }
+            }
+
     async sendUserAnswer(selectedAnswer, date, errorCallback) {
            try {
                const token = await this.getTokenOrThrow("Only authenticated users can save answers.");

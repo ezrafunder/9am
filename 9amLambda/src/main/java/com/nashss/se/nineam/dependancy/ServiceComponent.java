@@ -1,6 +1,7 @@
 package com.nashss.se.nineam.dependancy;
 
 
+import com.nashss.se.nineam.activity.DeleteAnswerActivity;
 import com.nashss.se.nineam.activity.GetQuestionActivity;
 import com.nashss.se.nineam.activity.SaveUserAnswerActivity;
 import com.nashss.se.nineam.activity.ViewHistoryActivity;
@@ -20,4 +21,6 @@ public interface ServiceComponent {
     SaveUserAnswerActivity provideSaveUserAnswerActivity();
 
     ViewHistoryActivity provideViewHistoryActivity();
+
+    DeleteAnswerActivity provideDeleteAnswerActivity();
 }

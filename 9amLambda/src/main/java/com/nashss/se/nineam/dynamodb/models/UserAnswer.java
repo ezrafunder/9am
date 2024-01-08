@@ -21,11 +21,22 @@ public class UserAnswer {
     @DynamoDBAttribute(attributeName = "date")
     private String date;
 
+    @DynamoDBAttribute(attributeName = "question")
+    private String question;
     @DynamoDBAttribute(attributeName = "isCorrect")
     private boolean isCorrect;
 
-
-
+    @Override
+    public String toString() {
+        return "UserAnswer{" +
+                "questionId='" + questionId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userChoice='" + userChoice + '\'' +
+                ", date='" + date + '\'' +
+                ", question='" + question + '\'' +
+                ", isCorrect=" + isCorrect +
+                '}';
+    }
 
     public String getDate() {
         return date;
@@ -36,6 +47,23 @@ public class UserAnswer {
 
     public String getQuestionId() {
         return questionId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserAnswer that = (UserAnswer) o;
+        return isCorrect == that.isCorrect && Objects.equals(questionId, that.questionId) && Objects.equals(userId, that.userId) && Objects.equals(userChoice, that.userChoice) && Objects.equals(date, that.date) && Objects.equals(question, that.question);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(questionId, userId, userChoice, date, question, isCorrect);
+    }
+
+    public String getQuestion() {
+        return question;
     }
 
     public void setQuestionId(String questionId) {
@@ -57,6 +85,9 @@ public class UserAnswer {
     public void setUserChoice(String userChoice) {
         this.userChoice = userChoice;
     }
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 
     public void setCorrect(boolean correct) {
         isCorrect = correct;
@@ -67,29 +98,4 @@ public class UserAnswer {
     }
 
 
-
-
-    @Override
-    public String toString() {
-        return "UserAnswer{" +
-                "questionId='" + questionId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", userChoice='" + userChoice + '\'' +
-                ", date='" + date + '\'' +
-                ", isCorrect=" + isCorrect +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserAnswer that = (UserAnswer) o;
-        return isCorrect == that.isCorrect && Objects.equals(questionId, that.questionId) && Objects.equals(userId, that.userId) && Objects.equals(userChoice, that.userChoice) && Objects.equals(date, that.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(questionId, userId, userChoice, date, isCorrect);
-    }
 }

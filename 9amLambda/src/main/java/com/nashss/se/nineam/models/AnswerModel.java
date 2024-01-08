@@ -9,18 +9,27 @@ public class AnswerModel {
     private final String userChoice;
     private final boolean isCorrect;
 
+    private final String question;
     private final String date;
 
-    private AnswerModel(String questionId, String userId, String userChoice, boolean isCorrect, String date) {
+    private AnswerModel(String questionId, String userId, String userChoice, boolean isCorrect, String date, String question) {
         this.questionId = questionId;
         this.userId = userId;
         this.userChoice = userChoice;
         this.isCorrect = isCorrect;
         this.date = date;
+        this.question = question;
     }
 
     public String getQuestionId() {
         return questionId;
+    }
+    public String getDate() {
+        return date;
+    }
+
+    public String getQuestion() {
+        return question;
     }
 
     public String getUserId() {
@@ -54,6 +63,8 @@ public class AnswerModel {
 
     public static class Builder {
         private String questionId;
+
+        private String question;
         private String userId;
         private String userChoice;
         private boolean isCorrect;
@@ -61,6 +72,10 @@ public class AnswerModel {
 
         public Builder withQuestionId(String questionId) {
             this.questionId = questionId;
+            return this;
+        }
+        public Builder withQuestion(String question) {
+            this.question = question;
             return this;
         }
         public Builder withDate(String date) {
@@ -84,7 +99,7 @@ public class AnswerModel {
         }
 
         public AnswerModel build() {
-            return new AnswerModel(questionId, userId, userChoice, isCorrect, date);
+            return new AnswerModel(questionId, userId, userChoice, isCorrect, date, question);
         }
     }
 }

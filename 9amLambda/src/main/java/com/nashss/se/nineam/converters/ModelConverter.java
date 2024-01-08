@@ -31,6 +31,7 @@ public class ModelConverter {
                 .withUserChoice(userAnswer.getUserChoice())
                 .withUserId(userAnswer.getUserId())
                 .withDate(userAnswer.getDate())
+                .withQuestion(userAnswer.getQuestion())
                 .build();
     }
     public List<AnswerModel> toAnswerModelList(List<UserAnswer> answers) {

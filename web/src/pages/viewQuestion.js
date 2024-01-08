@@ -17,7 +17,7 @@ class ViewQuestion extends BindingClass {
     async clientLoaded() {
         try {
             console.log('Sending API request to fetch question...');
-            const question = await this.client.getQuestion("2023-11-19");
+            const question = await this.client.getQuestion("2023-11-17");
             console.log('Question data received:', question);
             this.dataStore.set('question', question);
         } catch (error) {
@@ -34,9 +34,16 @@ class ViewQuestion extends BindingClass {
 
         document.getElementById('submit').addEventListener('click', this.submit);
 
+        document.getElementById('viewHistoryButton').addEventListener('click', this.viewHistory);
+
         this.clientLoaded();
 
     }
+
+     viewHistory() {
+            window.location.href = 'viewHistory.html';
+        }
+
 
     async submit(evt) {
         evt.preventDefault();
