@@ -1,6 +1,7 @@
 package com.nashss.se.nineam.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
@@ -10,7 +11,9 @@ import com.nashss.se.nineam.exceptions.UserAnswerNotFoundException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Singleton
 
@@ -38,17 +41,29 @@ class UserAnswerDao {
         return userAnswer;
     }
 
-    public List<UserAnswer> getAllUserAnswers(String userId)
+    public List<UserAnswer> getAllUserAnswers(String userId, boolean correctOnly) {
+        DynamoDBQueryExpression<UserAnswer> queryExpression;
+        if (correctOnly) {
+            queryExpression = new DynamoDBQueryExpression<UserAnswer>()
+                    .withIndexName("userIdAndIsCorrectIndex") //GSI
+                    .withConsistentRead(false)
+                    .withKeyConditionExpression("userId = :userId and isCorrect = :isCorrect")
+                    .withExpressionAttributeValues(Map.of(
+                            ":userId", new AttributeValue().withS(userId),
+                            ":isCorrect", new AttributeValue().withBOOL(true)
+                    ));
 
-    {
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        scanExpression.addFilterCondition(
-                "userId",
-                new Condition().withComparisonOperator(ComparisonOperator.EQ).withAttributeValueList(new AttributeValue(userId))
-        );
-        List<UserAnswer> scannedItems = dynamoDBMapper.scan(UserAnswer.class, scanExpression);
-        return scannedItems;
+        } else {
+            queryExpression = new DynamoDBQueryExpression<UserAnswer>()
+                    .withKeyConditionExpression("userId = :userId")
+                    .withExpressionAttributeValues(Map.of(
+                            ":userId", new AttributeValue().withS(userId)
+                    ));
+
+        }
+        return dynamoDBMapper.query(UserAnswer.class, queryExpression);
     }
+
 
 
     public void updateScore(UserAnswer userAnswer) {
@@ -62,6 +77,5 @@ class UserAnswerDao {
 }
 
 
-//request, result, and activity 1, lambda, modelconvertor change
 
 

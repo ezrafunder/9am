@@ -67,7 +67,7 @@ export default class NineAmClient extends BindingClass {
     async getQuestion(date, errorCallback) {
         try {
             const token = await this.getTokenOrThrow("Only authenticated users can view contacts.");
-            const response = await this.axiosClient.get(`questions/${date}`, {
+            const response = await this.axiosClient.get(`/questions/daily/${date}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -77,10 +77,27 @@ export default class NineAmClient extends BindingClass {
             this.handleError(error, errorCallback);
         }
     }
-    async getViewHistory(errorCallback) {
+    async deleteUserAnswer(questionId, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can delete answers.");
+            const response = await this.axiosClient.delete(`questions/${questionId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            console.log("Answer deleted successfully:", response.data);
+            return response.data;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+            throw error;
+        }
+    }
+
+    async getViewHistory(correctOnly, errorCallback) {
             try {
                     const token = await this.getTokenOrThrow("Only authenticated users can see all contacts.");
-                    const response = await this.axiosClient.get(`answers`, {
+                    const response = await this.axiosClient.get(`answers?correctOnly=${correctOnly}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }

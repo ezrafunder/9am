@@ -15,8 +15,11 @@ public class ViewHistoryActivity {
         this.userAnswerDao = userAnswerDao;
     }
     public ViewHistoryResult handleRequest(final ViewHistoryRequest getHistoryRequest) {
-        List<UserAnswer> userAnswers = userAnswerDao.getAllUserAnswers(getHistoryRequest.getUserId());
+        boolean correctOnly = getHistoryRequest.isCorrectOnly();
+
+        List<UserAnswer> userAnswers = userAnswerDao.getAllUserAnswers(getHistoryRequest.getUserId(), correctOnly);
         List<AnswerModel> userAnswerModels = new ModelConverter().toAnswerModelList(userAnswers);
+
         return ViewHistoryResult.builder()
                 .withAnswerModelList(userAnswerModels)
                 .build();

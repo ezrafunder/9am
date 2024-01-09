@@ -1,14 +1,11 @@
 package com.nashss.se.nineam.dynamodb.models;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "answers")
 public class UserAnswer {
-
     @DynamoDBRangeKey(attributeName = "questionId")
     private String questionId;
 
@@ -18,13 +15,11 @@ public class UserAnswer {
     @DynamoDBAttribute(attributeName = "userChoice")
     private String userChoice;
 
-    @DynamoDBAttribute(attributeName = "date")
-    private String date;
-
     @DynamoDBAttribute(attributeName = "question")
     private String question;
-    @DynamoDBAttribute(attributeName = "isCorrect")
+    private String date;
     private boolean isCorrect;
+
 
     @Override
     public String toString() {
@@ -41,6 +36,7 @@ public class UserAnswer {
     public String getDate() {
         return date;
     }
+
     public void setDate(String date) {
         this.date = date;
     }
@@ -69,7 +65,7 @@ public class UserAnswer {
     public void setQuestionId(String questionId) {
         this.questionId = questionId;
     }
-
+    @DynamoDBIndexHashKey(attributeName = "userId", globalSecondaryIndexName = "userIdAndIsCorrectIndex")
     public String getUserId() {
         return userId;
     }
@@ -85,6 +81,7 @@ public class UserAnswer {
     public void setUserChoice(String userChoice) {
         this.userChoice = userChoice;
     }
+
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -92,10 +89,9 @@ public class UserAnswer {
     public void setCorrect(boolean correct) {
         isCorrect = correct;
     }
-
+    @DynamoDBIndexRangeKey(attributeName = "isCorrect", globalSecondaryIndexName = "userIdAndIsCorrectIndex")
     public boolean isCorrect() {
         return isCorrect;
     }
-
 
 }

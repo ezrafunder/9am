@@ -16,8 +16,18 @@ public class ViewHistoryLambda extends LambdaActivityRunner<ViewHistoryRequest, 
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<ViewHistoryRequest> input, Context context) {
         log.info("handleRequest");
         return super.runActivity(
-                () -> input.fromUserClaims(claims ->
-                        ViewHistoryRequest.builder().withUserId(claims.get("email")).build()),
+                () -> {
+                    ViewHistoryRequest unauthenticatedRequest = input.fromQuery(query ->
+                            ViewHistoryRequest.builder()
+                                    .withCorrectOnly(Boolean.parseBoolean(query.get("correctOnly")))
+                                    .build());
+
+                    return input.fromUserClaims(claims ->
+                            ViewHistoryRequest.builder()
+                                    .withUserId(claims.get("email"))
+                                    .withCorrectOnly(unauthenticatedRequest.isCorrectOnly())
+                                    .build());
+                },
                 (request, serviceComponent) ->
                         serviceComponent.provideViewHistoryActivity().handleRequest(request)
         );
