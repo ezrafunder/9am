@@ -43,26 +43,27 @@ class UserAnswerDao {
 
     public List<UserAnswer> getAllUserAnswers(String userId, boolean correctOnly) {
         DynamoDBQueryExpression<UserAnswer> queryExpression;
+
         if (correctOnly) {
             queryExpression = new DynamoDBQueryExpression<UserAnswer>()
-                    .withIndexName("userIdAndIsCorrectIndex") //GSI
+                    .withIndexName("userIdAndIsCorrectIndex") // GSI
                     .withConsistentRead(false)
                     .withKeyConditionExpression("userId = :userId and isCorrect = :isCorrect")
                     .withExpressionAttributeValues(Map.of(
                             ":userId", new AttributeValue().withS(userId),
-                            ":isCorrect", new AttributeValue().withBOOL(true)
+                            ":isCorrect", new AttributeValue().withS("true")
                     ));
-
         } else {
             queryExpression = new DynamoDBQueryExpression<UserAnswer>()
                     .withKeyConditionExpression("userId = :userId")
                     .withExpressionAttributeValues(Map.of(
                             ":userId", new AttributeValue().withS(userId)
                     ));
-
         }
+
         return dynamoDBMapper.query(UserAnswer.class, queryExpression);
     }
+
 
 
 

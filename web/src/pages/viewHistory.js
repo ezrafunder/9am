@@ -47,7 +47,8 @@ class ViewHistory extends BindingClass {
             row.insertCell().textContent = userAnswer.date;
             row.insertCell().textContent = userAnswer.question;
             row.insertCell().textContent = userAnswer.userChoice;
-            row.insertCell().textContent = userAnswer.isCorrect ? 'Yes' : 'No';
+            row.insertCell().textContent = userAnswer.isCorrect === 'true' ? 'Yes' : 'No';
+
 
             const deleteButton = document.createElement("button");
             deleteButton.textContent = "Delete";

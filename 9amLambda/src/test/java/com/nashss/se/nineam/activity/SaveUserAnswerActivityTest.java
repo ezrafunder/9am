@@ -55,7 +55,8 @@ public class SaveUserAnswerActivityTest {
         expectedUserAnswer.setUserId(testUserId);
         expectedUserAnswer.setUserChoice(testUserChoice);
         expectedUserAnswer.setQuestionId(testQuestion.getQuestionId());
-        expectedUserAnswer.setCorrect(testUserChoice.equals(testQuestion.getAnswer()));
+        boolean isCorrect = testQuestion.getAnswer().equals(testUserChoice);
+        expectedUserAnswer.setCorrect(String.valueOf(isCorrect));;
         verify(userAnswerDao).saveUserAnswer(expectedUserAnswer);
 
         AnswerModel expectedAnswerModel = new ModelConverter().toAnswerModel(expectedUserAnswer);

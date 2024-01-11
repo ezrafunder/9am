@@ -7,12 +7,12 @@ public class AnswerModel {
     private final String questionId;
     private final String userId;
     private final String userChoice;
-    private final boolean isCorrect;
+    private final String isCorrect;
 
     private final String question;
     private final String date;
 
-    private AnswerModel(String questionId, String userId, String userChoice, boolean isCorrect, String date, String question) {
+    private AnswerModel(String questionId, String userId, String userChoice, String isCorrect, String date, String question) {
         this.questionId = questionId;
         this.userId = userId;
         this.userChoice = userChoice;
@@ -40,7 +40,7 @@ public class AnswerModel {
         return userChoice;
     }
 
-    public boolean isCorrect() {
+    public String getIsCorrect() {
         return isCorrect;
     }
 
@@ -67,7 +67,7 @@ public class AnswerModel {
         private String question;
         private String userId;
         private String userChoice;
-        private boolean isCorrect;
+        private String isCorrect;
         private String date;
 
         public Builder withQuestionId(String questionId) {
@@ -93,7 +93,7 @@ public class AnswerModel {
             return this;
         }
 
-        public Builder withIsCorrect(boolean isCorrect) {
+        public Builder withIsCorrect(String isCorrect) {
             this.isCorrect = isCorrect;
             return this;
         }

@@ -18,7 +18,7 @@ public class UserAnswer {
     @DynamoDBAttribute(attributeName = "question")
     private String question;
     private String date;
-    private boolean isCorrect;
+    private String isCorrect;
 
 
     @Override
@@ -86,11 +86,11 @@ public class UserAnswer {
         this.question = question;
     }
 
-    public void setCorrect(boolean correct) {
+    public void setCorrect(String correct) {
         isCorrect = correct;
     }
     @DynamoDBIndexRangeKey(attributeName = "isCorrect", globalSecondaryIndexName = "userIdAndIsCorrectIndex")
-    public boolean isCorrect() {
+    public String isCorrect() {
         return isCorrect;
     }
 

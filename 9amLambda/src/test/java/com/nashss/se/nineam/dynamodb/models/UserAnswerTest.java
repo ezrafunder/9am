@@ -16,7 +16,7 @@ class UserAnswerTest {
         userAnswer.setQuestionId("12");
         userAnswer.setUserId("11");
         userAnswer.setUserChoice("Option A");
-        userAnswer.setCorrect(true);
+        userAnswer.setCorrect("true");
     }
 
     @Test
@@ -36,7 +36,7 @@ class UserAnswerTest {
 
     @Test
     void testIsCorrect() {
-        assertEquals(true, userAnswer.isCorrect());
+        assertEquals("true", userAnswer.isCorrect());
     }
 
     @Test
@@ -45,7 +45,7 @@ class UserAnswerTest {
         sameUserAnswer.setQuestionId("12");
         sameUserAnswer.setUserId("11");
         sameUserAnswer.setUserChoice("Option A");
-        sameUserAnswer.setCorrect(true);
+        sameUserAnswer.setCorrect("true");
 
         assertEquals(userAnswer, sameUserAnswer);
         assertNotEquals(userAnswer, null);

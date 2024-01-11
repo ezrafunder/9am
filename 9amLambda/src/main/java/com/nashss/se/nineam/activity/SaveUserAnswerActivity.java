@@ -35,7 +35,7 @@ public class SaveUserAnswerActivity {
         userAnswer.setUserId(request.getUserId());
         userAnswer.setUserChoice(request.getUserChoice());
         userAnswer.setQuestionId(question.getQuestionId());
-        userAnswer.setCorrect(isCorrect);
+        userAnswer.setCorrect(String.valueOf(isCorrect));
         userAnswer.setDate(question.getDate());
         userAnswer.setQuestion(question.getQuestion());
 

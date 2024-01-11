@@ -329,7 +329,7 @@ Resources:
         - AttributeName: userId
           AttributeType: "S"
         - AttributeName: isCorrect
-          AttributeType: "B"
+          AttributeType: "S"
       KeySchema:
         - AttributeName: userId
           KeyType: "HASH"

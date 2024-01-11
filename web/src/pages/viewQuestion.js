@@ -17,7 +17,7 @@ class ViewQuestion extends BindingClass {
     async clientLoaded() {
         try {
             console.log('Sending API request to fetch question...');
-            const question = await this.client.getQuestion("2023-11-17");
+            const question = await this.client.getQuestion("2023-11-19");
             console.log('Question data received:', question);
             this.dataStore.set('question', question);
         } catch (error) {
@@ -78,7 +78,7 @@ class ViewQuestion extends BindingClass {
             errorMessageDisplay.classList.remove('hidden');
         });
         //console.log('Answer sent:', answer);
-            document.getElementById('result').innerText = `Your Answer: ${this.selectedAnswer} ${answer.correct}`; //reformat
+            document.getElementById('result').innerText = `Your Answer: ${this.selectedAnswer} ${answer.isCorrect}`; //reformat
         //  List<UserAnswer> userAnswers = getUserAnswersFromDynamoDB(userId);
         //  ViewHistoryResult result = new ViewHistoryResult(userAnswers);
     

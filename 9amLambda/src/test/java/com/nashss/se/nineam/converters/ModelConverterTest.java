@@ -46,14 +46,14 @@ public class ModelConverterTest {
         userAnswer.setUserId("ezra");
         userAnswer.setUserChoice("A");
         userAnswer.setQuestionId("42");
-        userAnswer.setCorrect(true);
+        userAnswer.setCorrect("true");
         // When
         AnswerModel result = modelConverter.toAnswerModel(userAnswer);
         // Then
         assertEquals(userAnswer.getUserId(), result.getUserId());
         assertEquals(userAnswer.getUserChoice(), result.getUserChoice());
         assertEquals(userAnswer.getQuestionId(), result.getQuestionId());
-        assertEquals(userAnswer.isCorrect(), result.isCorrect());
+        assertEquals(userAnswer.isCorrect(), result.getIsCorrect());
     }
 
 
