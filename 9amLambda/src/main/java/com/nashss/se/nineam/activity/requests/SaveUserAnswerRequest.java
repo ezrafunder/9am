@@ -4,15 +4,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 @JsonDeserialize(builder = SaveUserAnswerRequest.Builder.class)
 public class SaveUserAnswerRequest {
-
+//checkstyle messed up my code here
     private String date;
     private String userChoice;
     private String userId;
-
-
-
-
-
 
     public SaveUserAnswerRequest(String date, String userChoice, String userId) {
         this.date = date;

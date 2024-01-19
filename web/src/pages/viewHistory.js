@@ -6,24 +6,33 @@ import DataStore from '../util/DataStore';
 class ViewHistory extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'viewHistory', 'deleteUserAnswer'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'viewHistory', 'deleteUserAnswer', 'toggleCorrectOnly'], this);
         this.dataStore = new DataStore();
         this.header = new Header(this.dataStore);
         this.dataStore.addChangeListener(this.viewHistory);
+        this.showCorrectOnly = false;
         console.log("viewHistory constructor");
+        const toggleButton = document.getElementById("toggleCorrectOnlyButton");
+            if (toggleButton) {
+                toggleButton.addEventListener("click", () => this.toggleCorrectOnly());
+                }
     }
 
     async clientLoaded() {
-        try {
-            console.log('Sending API request to fetch user answers...');
-            const userAnswers = await this.client.getViewHistory();
-            console.log('User answers received:', userAnswers);
-            this.dataStore.set('userAnswers', userAnswers);
-        } catch (error) {
-            console.error('Error loading user answers:', error);
-            this.dataStore.set('userAnswers', null);
+            try {
+                console.log('Sending API request to fetch user answers...');
+                const userAnswers = await this.client.getViewHistory(this.showCorrectOnly);
+                console.log('User answers received:', userAnswers);
+                this.dataStore.set('userAnswers', userAnswers);
+            } catch (error) {
+                console.error('Error loading user answers:', error);
+                this.dataStore.set('userAnswers', null);
+            }
         }
-    }
+         toggleCorrectOnly() {
+                this.showCorrectOnly = !this.showCorrectOnly;
+                this.clientLoaded();
+            }
 
     mount() {
         this.header.addHeaderToPage();
