@@ -24,6 +24,7 @@ module.exports = {
   },
   entry: {
     viewQuestion: path.resolve(__dirname, 'src', 'pages', 'viewQuestion.js'),
+    viewHistory: path.resolve(__dirname, 'src', 'pages', 'viewHistory.js'),
   },
   output: {
     path: path.resolve(__dirname, 'build', 'assets'),

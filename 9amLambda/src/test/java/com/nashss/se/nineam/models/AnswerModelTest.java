@@ -12,21 +12,21 @@ class AnswerModelTest {
                 .withQuestionId("1")
                 .withUserId("user1")
                 .withUserChoice("choiceA")
-                .withIsCorrect(true)
+                .withIsCorrect("true")
                 .build();
 
         AnswerModel answer2 = AnswerModel.builder()
                 .withQuestionId("1")
                 .withUserId("user1")
                 .withUserChoice("choiceA")
-                .withIsCorrect(true)
+                .withIsCorrect("true")
                 .build();
 
         AnswerModel answer3 = AnswerModel.builder()
                 .withQuestionId("2")
                 .withUserId("user2")
                 .withUserChoice("choiceB")
-                .withIsCorrect(false)
+                .withIsCorrect("false")
                 .build();
 
         // Test equality
@@ -44,12 +44,13 @@ class AnswerModelTest {
                 .withQuestionId("1")
                 .withUserId("user1")
                 .withUserChoice("choiceA")
-                .withIsCorrect(true)
+                .withIsCorrect("true")
                 .build();
 
         assertEquals("1", answer.getQuestionId());
         assertEquals("user1", answer.getUserId());
         assertEquals("choiceA", answer.getUserChoice());
-        assertTrue(answer.isCorrect());
+        assertEquals("true", answer.getIsCorrect());
+
     }
 }

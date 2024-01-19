@@ -237,29 +237,11 @@ Resources:
         MusicPlaylistService:
           Type: Api
           Properties:
-            Path: /questions/{date}
+            Path: /questions/daily/{date}
             Method: get
 
 
-#
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MySocialNetworkLambda
-#      Handler: com.nashss.se.mysocialnetwork.lambda.GetContactLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /contacts/{contactId}
-#            Method: get
-#
+
   SaveUserAnswerLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -280,107 +262,47 @@ Resources:
             Path: /answers
             Method: post
 
+  DeleteAnswerLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: 9amLambda
+      Handler: com.nashss.se.nineam.dynamodb.lambda.DeleteAnswerLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        MusicPlaylistService:
+          Type: Api
+          Properties:
+            Path: /questions/{questionId}
+            Method: delete
 
-ViewScoreLambda:
-        Type: AWS::Serverless::Function
-        Properties:
-        Role: !GetAtt AccessRole.Arn
-        CodeUri: 9amLambda
-        Handler: com.nashss.se.nineam.dynamodb.lambda.ViewScoreLambda::handleRequest
-        Runtime: java11
-        Architectures:
-            - x86_64
-        MemorySize: 512
-        Environment:
-            Variables:
-            JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-        Events:
-            MusicPlaylistService:
-            Type: Api
-            Properties:
-                Path: /answers
-                Method: get
 
-#
-#  CreateGroupLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: 9am
-#      Handler: com.nashss.se.mysocialnetwork.lambda.CreateGroupLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /groups
-#            Method: post
-#
-#  CreateContactLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MySocialNetworkLambda
-#      Handler: com.nashss.se.mysocialnetwork.lambda.CreateContactLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /contacts
-#            Method: post
-#
-#  GetAllGroupsLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MySocialNetworkLambda
-#      Handler: com.nashss.se.mysocialnetwork.lambda.GetAllGroupsLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MusicPlaylistService:
-#          Type: Api
-#          Properties:
-#            Path: /groups
-#            Method: get
-#
-#  AddContactToGroupLambda:
-#    Type: AWS::Serverless::Function
-#    Properties:
-#      Role: !GetAtt AccessRole.Arn
-#      CodeUri: MySocialNetworkLambda
-#      Handler: com.nashss.se.mysocialnetwork.lambda.AddContactToGroupLambda::handleRequest
-#      Runtime: java11
-#      Architectures:
-#        - x86_64
-#      MemorySize: 512
-#      Environment:
-#        Variables:
-#          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
-#      Events:
-#        MySocialNetwork:
-#          Type: Api
-#          Properties:
-#            Path: /groups/{name}/contacts
-#            Method: post
+  ViewHistoryLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: 9amLambda
+      Handler: com.nashss.se.nineam.dynamodb.lambda.ViewHistoryLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        MusicPlaylistService:
+          Type: Api
+          Properties:
+            Path: /answers
+            Method: get
+
 
   #-----------------------------------------------------
   # DynamoDB Configuration
@@ -398,14 +320,15 @@ ViewScoreLambda:
       BillingMode: "PAY_PER_REQUEST"
       TableName: "questions"
 
-   AnswersTable:
+  AnswersTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-
         - AttributeName: questionId
           AttributeType: "S"
         - AttributeName: userId
+          AttributeType: "S"
+        - AttributeName: isCorrect
           AttributeType: "S"
       KeySchema:
         - AttributeName: userId
@@ -414,6 +337,15 @@ ViewScoreLambda:
           KeyType: "RANGE"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "answers"
+      GlobalSecondaryIndexes:
+        - IndexName: userIdAndIsCorrectIndex
+          KeySchema:
+            - AttributeName: "userId"
+              KeyType: HASH
+            - AttributeName: "isCorrect"
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
 
 #  GroupsTable:
 #    Type: AWS::DynamoDB::Table

@@ -9,26 +9,26 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GetQuestionLambda
-    extends LambdaActivityRunner<GetQuestionRequest, GetQuestionResult>
+        extends LambdaActivityRunner<GetQuestionRequest, GetQuestionResult>
         implements RequestHandler<AuthenticatedLambdaRequest<GetQuestionRequest>, LambdaResponse> {
 
-        private final Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-        @Override
-        public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetQuestionRequest> input, Context context) {
-            log.info("handleRequest");
-            return super.runActivity(
-                    () -> {
-                        GetQuestionRequest unauthenticatedRequest = input.fromPath(path -> GetQuestionRequest.builder()
-                                .withDate(path.get("date"))
-                                .build());
-                        return unauthenticatedRequest;
-                    },
-                    (request, serviceComponent) ->
-                            serviceComponent.provideGetQuestionActivity().handleRequest(request)
-            );
-        }
-
+    @Override
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetQuestionRequest> input, Context context) {
+        log.info("handleRequest");
+        return super.runActivity(
+                () -> {
+                    GetQuestionRequest unauthenticatedRequest = input.fromPath(path -> GetQuestionRequest.builder()
+                            .withDate(path.get("date"))
+                            .build());
+                    return unauthenticatedRequest;
+                },
+                (request, serviceComponent) ->
+                        serviceComponent.provideGetQuestionActivity().handleRequest(request)
+        );
     }
+
+}
 
 

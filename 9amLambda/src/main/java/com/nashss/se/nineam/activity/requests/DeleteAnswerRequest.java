@@ -3,26 +3,26 @@ package com.nashss.se.nineam.activity.requests;
 import java.util.Objects;
 
 /**
- * Represents a request to get an answer.
+ * Represents a request to delete an answer.
  */
-public class GetAnswerRequest {
+public class DeleteAnswerRequest {
 
     private final String questionId;
     private final String userId;
 
     /**
-     * Constructs a GetAnswerRequest with the given question ID and user ID.
+     * Constructs a DeleteAnswerRequest with the given question ID and user ID.
      *
-     * @param questionId The ID of the question to get the answer for.
-     * @param userId The ID of the user who answered the question.
+     * @param questionId The ID of the question to delete the answer for.
+     * @param userId     The ID of the user who answered the question.
      */
-    public GetAnswerRequest(String questionId, String userId) {
+    public DeleteAnswerRequest(String questionId, String userId) {
         this.questionId = questionId;
         this.userId = userId;
     }
 
     /**
-     * Returns the question ID associated with the get request.
+     * Returns the question ID associated with the delete request.
      *
      * @return The question ID.
      */
@@ -31,7 +31,7 @@ public class GetAnswerRequest {
     }
 
     /**
-     * Returns the user ID associated with the get request.
+     * Returns the user ID associated with the delete request.
      *
      * @return The user ID.
      */
@@ -53,7 +53,7 @@ public class GetAnswerRequest {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        GetAnswerRequest that = (GetAnswerRequest) o;
+        DeleteAnswerRequest that = (DeleteAnswerRequest) o;
         return Objects.equals(questionId, that.questionId) &&
                 Objects.equals(userId, that.userId);
     }
@@ -75,14 +75,14 @@ public class GetAnswerRequest {
      */
     @Override
     public String toString() {
-        return "GetAnswerRequest{" +
+        return "DeleteAnswerRequest{" +
                 "questionId='" + questionId + '\'' +
                 ", userId='" + userId + '\'' +
                 '}';
     }
 
     /**
-     * Creates a builder for constructing GetAnswerRequest instances.
+     * Creates a builder for constructing DeleteAnswerRequest instances.
      *
      * @return A new Builder instance.
      */
@@ -91,7 +91,7 @@ public class GetAnswerRequest {
     }
 
     /**
-     * Builder class for constructing GetAnswerRequest instances.
+     * Builder class for constructing DeleteAnswerRequest instances.
      */
     public static class Builder {
         private String questionId;
@@ -120,12 +120,12 @@ public class GetAnswerRequest {
         }
 
         /**
-         * Builds the GetAnswerRequest instance.
+         * Builds the DeleteAnswerRequest instance.
          *
-         * @return The constructed GetAnswerRequest instance.
+         * @return The constructed DeleteAnswerRequest instance.
          */
-        public GetAnswerRequest build() {
-            return new GetAnswerRequest(questionId, userId);
+        public DeleteAnswerRequest build() {
+            return new DeleteAnswerRequest(questionId, userId);
         }
     }
 }

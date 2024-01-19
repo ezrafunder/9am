@@ -1,18 +1,35 @@
 package com.nashss.se.nineam.activity.results;
 
-import org.apache.logging.log4j.core.layout.AbstractStringLayout;
 import com.nashss.se.nineam.models.AnswerModel;
+
+/**
+ * Represents the result of a save user answer operation.
+ */
 public class SaveUserAnswerResult {
 
-    private AnswerModel answer;
+    /**
+     * The saved answer.
+     */
+    private final AnswerModel answer;
 
+    /**
+     * Constructs a SaveUserAnswerResult with the given answer.
+     *
+     * @param answer The saved answer.
+     */
+    private SaveUserAnswerResult(AnswerModel answer) {
+        this.answer = answer;
+    }
+
+    /**
+     * Returns the saved answer.
+     *
+     * @return The saved answer.
+     */
     public AnswerModel getAnswer() {
         return answer;
     }
 
-    private SaveUserAnswerResult(AnswerModel answer) {
-        this.answer = answer;
-    }
     //CHECKSTYLE:OFF:Builder
     public static Builder builder() {
         return new Builder();
