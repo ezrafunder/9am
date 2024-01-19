@@ -1,28 +1,29 @@
+
 package com.nashss.se.nineam.activity;
 
-import com.nashss.se.nineam.activity.DeleteAnswerActivity;
 import com.nashss.se.nineam.activity.requests.DeleteAnswerRequest;
 import com.nashss.se.nineam.activity.results.DeleteAnswerResult;
 import com.nashss.se.nineam.dynamodb.UserAnswerDao;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeleteAnswerActivityTest {
-
     @Test
-    public void testHandleRequest_SuccessfulDeletion() {
-        UserAnswerDao userAnswerDao = new MockUserAnswerDao(true);
+  public void testHandleRequest_SuccessfulDeletion() {
+       UserAnswerDao userAnswerDao = new MockUserAnswerDao(true);
 
-        DeleteAnswerActivity deleteAnswerActivity = new DeleteAnswerActivity(userAnswerDao);
+      DeleteAnswerActivity deleteAnswerActivity = new DeleteAnswerActivity(userAnswerDao);
 
-        DeleteAnswerRequest request = new DeleteAnswerRequest("userId123", "questionId456");
+       DeleteAnswerRequest request = new DeleteAnswerRequest("userId123", "questionId456");
 
-        DeleteAnswerResult result = deleteAnswerActivity.handleRequest(request);
+       DeleteAnswerResult result = deleteAnswerActivity.handleRequest(request);
 
-        assertTrue(result.isSuccess());
-    }
+       assertTrue(result.isSuccess());
+   }
 
-    // Mock implementation of UserAnswerDao
+
     private static class MockUserAnswerDao extends UserAnswerDao {
         private final boolean deletionResult;
 
@@ -39,3 +40,4 @@ public class DeleteAnswerActivityTest {
         }
     }
 }
+
