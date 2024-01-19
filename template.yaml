@@ -224,7 +224,7 @@ Resources:
                 Action: dynamodb:*
                 Resource:
                   - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/answers"
-                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/answers/userIdAndIsCorrectIndex"
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/answers/index/userIdAndIsCorrectIndex"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
